@@ -67,4 +67,17 @@
             />
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/delete_task_text_view_btn"
+        android:layout_alignParentBottom="true"
+        android:text="Delete task"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#AA0000"
+        android:visibility="gone"
+        />
+
 </RelativeLayout>
