@@ -30,6 +30,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             app:tint="@color/white"
+            android:background="@color/primary"
             />
     </RelativeLayout>
 
