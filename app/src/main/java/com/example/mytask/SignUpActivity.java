@@ -80,16 +80,16 @@ public class SignUpActivity extends AppCompatActivity {
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        changeInProgress(false);
                         if (task.isSuccessful()){
                             //creating account is done
-                            Toast.makeText(SignUpActivity.this,"Successfully create account, check email to verify",Toast.LENGTH_SHORT).show();
+                            Utility.showToast(SignUpActivity.this,"Successfully create account, check email to verify");
                             firebaseAuth.getCurrentUser().sendEmailVerification();
                             firebaseAuth.signOut();
 //                            finish();
                         }else{
                             //failure
-                            Toast.makeText(SignUpActivity.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
-
+                            Utility.showToast(SignUpActivity.this,task.getException().getLocalizedMessage());
                         }
                     }
                 }
