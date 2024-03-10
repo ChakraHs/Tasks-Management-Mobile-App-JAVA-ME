@@ -13,6 +13,15 @@
         android:theme="@style/Theme.MyTask"
         tools:targetApi="31">
         <activity
+            android:name=".TaskDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
