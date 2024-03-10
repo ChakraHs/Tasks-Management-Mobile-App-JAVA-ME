@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="task title"
+        android:id="@+id/task_title_text_view"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginVertical="4dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="this can be task description that can be long"
+        android:maxLines="2"
+        android:id="@+id/task_description_text_view"
+        android:ellipsize="end"
+        android:textSize="17sp"
+        android:layout_marginVertical="4dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="timestamp"
+        android:gravity="right"
+        android:maxLines="2"
+        android:id="@+id/task_timestamp_text_view"
+        android:ellipsize="end"
+        android:textSize="12sp"
+        android:layout_marginVertical="4dp"
+        />
+
+</LinearLayout>
