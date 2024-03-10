@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -20,8 +21,9 @@ public class TaskDetailsActivity extends AppCompatActivity {
 
     TextView pageTitleTextView;
     String title,description,docId;
-
     Boolean isEditMode = false;
+
+    TextView deleteTaskTextViewBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,8 @@ public class TaskDetailsActivity extends AppCompatActivity {
         descriptionEditText = findViewById(R.id.task_description_text);
         saveTaskbtn = findViewById(R.id.save_task_btn);
         pageTitleTextView = findViewById(R.id.page_title);
+        deleteTaskTextViewBtn = findViewById(R.id.delete_task_text_view_btn);
+
 
         //receive data
         title = getIntent().getStringExtra("title");
@@ -45,10 +49,14 @@ public class TaskDetailsActivity extends AppCompatActivity {
             titleEditText.setText(title);
             descriptionEditText.setText(description);
             titleEditText.setText(title);
+
+            deleteTaskTextViewBtn.setVisibility(View.VISIBLE);
         }
 
 
         saveTaskbtn.setOnClickListener(v -> saveTask());
+
+        deleteTaskTextViewBtn.setOnClickListener( v -> deleteTaskFromFirebase());
     }
 
     void saveTask(){
@@ -93,5 +101,24 @@ public class TaskDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    void deleteTaskFromFirebase(){
+        DocumentReference documentReference;
+        documentReference = Utility.getCollectionReferenceForTask().document(docId);
+        documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+                if(task.isSuccessful()){
+                    //task is deleted
+                    Utility.showToast(TaskDetailsActivity.this,"Task deleted successfully");
+                    finish();
+                }else{
+                    //failed
+                    Utility.showToast(TaskDetailsActivity.this,"Fail while deleting task");
+                }
+            }
+        });
+
     }
 }
