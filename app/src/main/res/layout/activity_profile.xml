@@ -49,7 +49,7 @@
             />
 
         <Button
-            android:id="@+id/btn_save_image"
+            android:id="@+id/save_profile_btn"
             android:layout_width="157dp"
             android:layout_height="68dp"
             android:layout_marginTop="20dp"
