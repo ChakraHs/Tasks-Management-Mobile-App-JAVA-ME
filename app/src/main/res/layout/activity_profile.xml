@@ -13,8 +13,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:src="@drawable/user"
-        app:civ_border_color="@color/primary"
-        app:civ_border_width="2dp"
         >
 
     </ImageView>

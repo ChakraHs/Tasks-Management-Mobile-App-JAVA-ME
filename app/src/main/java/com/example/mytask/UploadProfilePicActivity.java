@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class UploadProfilePicActivity extends AppCompatActivity {
 
@@ -51,6 +52,7 @@ public class UploadProfilePicActivity extends AppCompatActivity {
 
         //Set user's image in profile ImageView if already uploaded
 
+        Picasso.get().load(uri).into(imageView);
 
 
     }
