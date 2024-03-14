@@ -25,16 +25,16 @@ public class ProfileActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.save_profile_btn);
 
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this,UploadProfilePicActivity.class);
-                startActivity(intent);
-//                finish();
-            }
-        });
+        imageView.setOnClickListener(v -> redirect());
 
 
 
     }
+
+    void redirect(){
+        Intent intent = new Intent(ProfileActivity.this,UploadProfilePicActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
+

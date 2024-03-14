@@ -35,7 +35,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="300dp"
             android:id="@+id/chosen_image_view"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_corner"
