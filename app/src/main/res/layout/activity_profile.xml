@@ -6,16 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:src="@drawable/user"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_shape"
         >
 
-    </ImageView>
+    </de.hdodenhof.circleimageview.CircleImageView>
+
+
     <TextView
         android:id="@+id/chang_profile_btn"
         android:layout_below="@+id/profile_image"
