@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
@@ -17,7 +18,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,14 +32,30 @@ public class MainActivity extends AppCompatActivity {
 
     TaskAdapter taskAdapter;
 
+    FirebaseUser firebaseUser;
+
+    Uri uri;
+
+    CircleImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        imageView = findViewById(R.id.profile_image);
+
         addTaskBtn = findViewById(R.id.add_task_btn);
         recyclerView = findViewById(R.id.recycler_view);
         menuBtn = findViewById(R.id.menu_btn);
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        uri = firebaseUser.getPhotoUrl();
+        //image view set image uri should not be used with regular URIs. So we are using Picasso
+
+        if(uri != null){
+            Picasso.get().load(uri).into(imageView);
+        }
 
         addTaskBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TaskDetailsActivity.class)));
         menuBtn.setOnClickListener(v -> showMenu());
@@ -47,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         PopupMenu popupMenu = new PopupMenu(MainActivity.this,menuBtn);
         popupMenu.getMenu().add("Logout");
         popupMenu.getMenu().add("Profile");
-        popupMenu.getMenu().add("Image");
         popupMenu.show();
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -60,11 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(menuItem.getTitle() == "Profile"){
                     startActivity(new Intent(MainActivity.this,ProfileActivity.class));
-                    finish();
-                    return true;
-                }
-                if(menuItem.getTitle() == "Image"){
-                    startActivity(new Intent(MainActivity.this,UploadProfilePicActivity.class));
                     finish();
                     return true;
                 }
