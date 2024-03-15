@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -124,8 +125,23 @@ public class UploadProfilePicActivity extends AppCompatActivity {
                             currentUser.updateProfile(profileUpdates);
                         }
                     });
+
+                    progressBar.setVisibility(View.GONE);
+                    Utility.showToast(UploadProfilePicActivity.this,"Upload successful!");
+
+                    Intent intent = new Intent(UploadProfilePicActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Utility.showToast(UploadProfilePicActivity.this,e.getMessage());
                 }
             });
+        }else{
+            progressBar.setVisibility(View.GONE);
+            Utility.showToast(UploadProfilePicActivity.this,"No file selected!");
         }
     }
 
