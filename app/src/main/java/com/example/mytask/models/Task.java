@@ -4,11 +4,18 @@ package com.example.mytask.models;
 import com.google.firebase.Timestamp;
 
 public class Task {
+
+    private String id ;
     String title;
     String description;
     Timestamp timestamp;
 
-    public Task(){}
+    Boolean isDone;
+
+    public Task(){
+        this.isDone = Boolean.FALSE;
+    }
+
 
     public String getTitle() {
         return title;
@@ -32,5 +39,13 @@ public class Task {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Boolean getIsDone() {
+        return isDone;
+    }
+
+    public void setIsDone(Boolean isDone) {
+        this.isDone = isDone;
     }
 }

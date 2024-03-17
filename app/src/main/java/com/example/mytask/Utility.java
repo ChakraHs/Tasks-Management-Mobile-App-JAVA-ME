@@ -16,7 +16,7 @@ public class Utility {
         Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
     }
 
-    static CollectionReference getCollectionReferenceForTask(){
+    public static CollectionReference getCollectionReferenceForTask(){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         return FirebaseFirestore.getInstance().collection("tasks").document(currentUser.getUid()).collection("my_tasks");
     }
