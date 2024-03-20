@@ -13,19 +13,29 @@
         android:layout_height="wrap_content"
         android:id="@+id/title_bar_layout"
         >
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow"
+            android:id="@+id/return_btn"
+            android:background="@color/primary"
+            android:paddingHorizontal="20dp"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add new task"
             android:id="@+id/page_title"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:layout_toRightOf="@+id/return_btn"
+            android:layout_marginHorizontal="20dp"
             />
         <ImageButton
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/baseline_add_24"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/check"
             android:id="@+id/save_task_btn"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
@@ -60,7 +70,6 @@
             android:id="@+id/task_description_text"
             android:hint="Description"
             android:textSize="20sp"
-            android:textStyle="bold"
             android:padding="12dp"
             android:textColor="@color/black"
             android:gravity="top"
@@ -76,8 +85,10 @@
         android:gravity="center"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#AA0000"
+        android:textColor="#FFF"
         android:visibility="gone"
+        android:background="#ff4455"
+        android:padding="10dp"
         />
 
 </RelativeLayout>

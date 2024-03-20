@@ -17,7 +17,7 @@ import com.google.firebase.firestore.DocumentReference;
 public class TaskDetailsActivity extends AppCompatActivity {
 
     EditText titleEditText, descriptionEditText;
-    ImageButton saveTaskbtn;
+    ImageButton saveTaskbtn,returnBtn;
 
     TextView pageTitleTextView;
     String title,description,docId;
@@ -34,6 +34,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
         saveTaskbtn = findViewById(R.id.save_task_btn);
         pageTitleTextView = findViewById(R.id.page_title);
         deleteTaskTextViewBtn = findViewById(R.id.delete_task_text_view_btn);
+        returnBtn = findViewById(R.id.return_btn);
 
 
         //receive data
@@ -48,7 +49,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
         if(isEditMode){
             titleEditText.setText(title);
             descriptionEditText.setText(description);
-            titleEditText.setText(title);
+            pageTitleTextView.setText("Edit task");
 
             deleteTaskTextViewBtn.setVisibility(View.VISIBLE);
         }
@@ -57,6 +58,8 @@ public class TaskDetailsActivity extends AppCompatActivity {
         saveTaskbtn.setOnClickListener(v -> saveTask());
 
         deleteTaskTextViewBtn.setOnClickListener( v -> deleteTaskFromFirebase());
+
+        returnBtn.setOnClickListener(v-> returnBack());
     }
 
     void saveTask(){
@@ -120,5 +123,9 @@ public class TaskDetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    void returnBack(){
+        finish();
     }
 }
