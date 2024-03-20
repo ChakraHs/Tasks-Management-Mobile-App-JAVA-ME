@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 
 import com.example.mytask.adapters.TaskAdapter;
 import com.example.mytask.models.Task;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageButton menuBtn;
 
+    RelativeLayout userInfosLayout;
+
     TaskAdapter taskAdapter;
 
     FirebaseUser firebaseUser;
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         addTaskBtn = findViewById(R.id.add_task_btn);
         recyclerView = findViewById(R.id.recycler_view);
         menuBtn = findViewById(R.id.menu_btn);
+        userInfosLayout = findViewById(R.id.user_info);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         uri = firebaseUser.getPhotoUrl();
@@ -59,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
         addTaskBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TaskDetailsActivity.class)));
         menuBtn.setOnClickListener(v -> showMenu());
+        userInfosLayout.setOnClickListener( v -> {
+            startActivity(new Intent(MainActivity.this,ProfileActivity.class));
+        });
 
         setupRecyclerView();
 
