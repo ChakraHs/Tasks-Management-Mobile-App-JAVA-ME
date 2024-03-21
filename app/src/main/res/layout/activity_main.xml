@@ -20,7 +20,7 @@
             android:text="Tasks"
             android:id="@+id/page_title"
             android:textSize="32sp"
-            android:textColor="@color/black"
+            android:textColor="@color/primary"
             android:textStyle="bold"
             />
         <ImageButton
@@ -30,8 +30,8 @@
             android:id="@+id/menu_btn"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            app:tint="@color/white"
-            android:background="@color/primary"
+            app:tint="@color/primary"
+            android:background="@color/white"
             />
     </RelativeLayout>
 
