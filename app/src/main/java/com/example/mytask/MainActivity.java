@@ -27,7 +27,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    FloatingActionButton addTaskBtn;
+//    FloatingActionButton addTaskBtn;
+    ImageButton addTaskBtn;
     RecyclerView recyclerView;
     ImageButton menuBtn;
 
