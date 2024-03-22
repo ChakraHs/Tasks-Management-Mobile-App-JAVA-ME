@@ -32,11 +32,9 @@ import java.util.Objects;
 
 public class TaskAdapter extends FirestoreRecyclerAdapter<Task, TaskAdapter.TaskViewHolder> {
 
-    LinkedList<Task> tasks;
     Context context;
     FirebaseFirestore db;
     FirebaseUser currentUser;
-    FragmentManager fragmentManager;
     private static final String TAG = "TaskAdapter";
     public TaskAdapter(@NonNull FirestoreRecyclerOptions<Task> options, Context context) {
         super(options);
