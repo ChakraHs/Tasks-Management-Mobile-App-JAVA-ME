@@ -64,7 +64,7 @@
             android:layout_toEndOf="@id/profile_image"
             android:textStyle="bold"
             android:layout_marginTop="15dp"
-            android:textColor="@color/black"
+            android:textColor="@color/primary"
             android:layout_marginLeft="20dp"
             />
 
