@@ -42,7 +42,8 @@
         android:layout_below="@id/title_bar_layout"
         android:layout_marginVertical="20dp"
         android:id="@+id/user_info"
-        android:background="@color/white"
+        android:background="@drawable/shadow_background"
+        android:backgroundTint="#D4E7F5"
         android:padding="10dp"
         >
 
@@ -59,14 +60,48 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username"
+            android:text="Chakra houcine"
             android:textSize="22sp"
             android:layout_toEndOf="@id/profile_image"
             android:textStyle="bold"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/primary"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
             android:layout_marginLeft="20dp"
             />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/profile_image"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="45dp"
+            android:background="@drawable/rounded_button_background"
+            android:paddingHorizontal="5dp"
+            android:backgroundTint="@color/white"
+            >
+            <Button
+                android:id="@+id/my_tasks_btn"
+                android:layout_toEndOf="@+id/profile_image"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="My lists"
+                android:textColor="@color/primary"
+                android:paddingVertical="0dp"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:backgroundTint="#D4E7F5"
+                android:backgroundTintMode="add"
+                />
+            <Button
+                android:id="@+id/events_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:backgroundTint="@color/white"
+                android:paddingVertical="0dp"
+                android:text="Events"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+        </LinearLayout>
 
     </RelativeLayout>
 

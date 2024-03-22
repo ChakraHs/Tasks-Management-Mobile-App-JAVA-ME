@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
@@ -41,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     Uri uri;
 
     CircleImageView imageView;
+
+
+    Button myListButton = findViewById(R.id.my_tasks_btn);
+    Button eventsButton = findViewById(R.id.events_btn);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
