@@ -9,12 +9,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 
 
+import com.example.mytask.fragments.EventsFragment;
 import com.example.mytask.fragments.TasksFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
     CircleImageView imageView;
 
 
-    Button myListButton;
-    Button eventsButton;
+    Button myListButton, eventsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,34 @@ public class MainActivity extends AppCompatActivity {
 //        recyclerView = findViewById(R.id.recycler_view);
         menuBtn = findViewById(R.id.menu_btn);
         userInfosLayout = findViewById(R.id.user_info);
+
+        myListButton = findViewById(R.id.my_tasks_btn);
+        eventsButton = findViewById(R.id.events_btn);
+
+        myListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, TasksFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+            }
+        });
+
+
+        eventsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, EventsFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+            }
+        });
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         uri = firebaseUser.getPhotoUrl();
