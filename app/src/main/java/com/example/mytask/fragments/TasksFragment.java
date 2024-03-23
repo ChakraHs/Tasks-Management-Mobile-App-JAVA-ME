@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.example.mytask.MainActivity;
 import com.example.mytask.R;
@@ -37,6 +38,7 @@ public class TasksFragment extends Fragment {
         // Required empty public constructor
     }
 
+        private ProgressBar progressBar;
         RecyclerView tasksRecyclerView;
 
         TaskAdapter taskAdapter;
@@ -65,7 +67,13 @@ public class TasksFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tasks, container, false);
 
+        progressBar = view.findViewById(R.id.progress_bar);
+
         tasksRecyclerView = view.findViewById(R.id.recycler_view);
+
+        // Initially, show the progress bar and hide the RecyclerView
+        progressBar.setVisibility(View.VISIBLE);
+        tasksRecyclerView.setVisibility(View.GONE);
 
         setupRecyclerView();
         // Inflate the layout for this fragment
@@ -79,6 +87,11 @@ public class TasksFragment extends Fragment {
             tasksRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             taskAdapter = new TaskAdapter(options,getActivity());
             tasksRecyclerView.setAdapter(taskAdapter);
+
+            // Hide the progress bar
+            progressBar.setVisibility(View.GONE);
+            // Show the RecyclerView
+            tasksRecyclerView.setVisibility(View.VISIBLE);
 
         }
 
