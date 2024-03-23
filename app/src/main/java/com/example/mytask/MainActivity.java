@@ -1,10 +1,10 @@
 package com.example.mytask;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,14 +14,10 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 
-import com.example.mytask.adapters.TaskAdapter;
-import com.example.mytask.models.Task;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import com.example.mytask.fragments.TasksFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -30,12 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
 //    FloatingActionButton addTaskBtn;
     ImageButton addTaskBtn;
-    RecyclerView recyclerView;
+//    RecyclerView recyclerView;
     ImageButton menuBtn;
 
     RelativeLayout userInfosLayout;
 
-    TaskAdapter taskAdapter;
+//    TaskAdapter taskAdapter;
 
     FirebaseUser firebaseUser;
 
@@ -44,18 +40,20 @@ public class MainActivity extends AppCompatActivity {
     CircleImageView imageView;
 
 
-    Button myListButton = findViewById(R.id.my_tasks_btn);
-    Button eventsButton = findViewById(R.id.events_btn);
+    Button myListButton;
+    Button eventsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        replaceFragment(new TasksFragment());
+
         imageView = findViewById(R.id.profile_image);
 
         addTaskBtn = findViewById(R.id.add_task_btn);
-        recyclerView = findViewById(R.id.recycler_view);
+//        recyclerView = findViewById(R.id.recycler_view);
         menuBtn = findViewById(R.id.menu_btn);
         userInfosLayout = findViewById(R.id.user_info);
 
@@ -73,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this,ProfileActivity.class));
         });
 
-        setupRecyclerView();
+//        setupRecyclerView();
+
+        // Find the TasksFragment using FragmentManager
+//        TasksFragment tasksFragment = (TasksFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
 
     }
 
@@ -93,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(menuItem.getTitle() == "Profile"){
                     startActivity(new Intent(MainActivity.this,ProfileActivity.class));
-                    finish();
                     return true;
                 }
                 return false;
@@ -101,31 +101,40 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void setupRecyclerView(){
-        Query query = Utility.getCollectionReferenceForTask().orderBy("timestamp",Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<Task> options = new FirestoreRecyclerOptions.Builder<Task>()
-                .setQuery(query,Task.class).build();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        taskAdapter = new TaskAdapter(options,this);
-        recyclerView.setAdapter(taskAdapter);
-    }
+//    void setupRecyclerView(){
+//        Query query = Utility.getCollectionReferenceForTask().orderBy("timestamp",Query.Direction.DESCENDING);
+//        FirestoreRecyclerOptions<Task> options = new FirestoreRecyclerOptions.Builder<Task>()
+//                .setQuery(query,Task.class).build();
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        taskAdapter = new TaskAdapter(options,this);
+//        recyclerView.setAdapter(taskAdapter);
+//    }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        taskAdapter.startListening();
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+////        taskAdapter.startListening();
+//    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        taskAdapter.stopListening();
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+////        taskAdapter.stopListening();
+//    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        taskAdapter.notifyDataSetChanged();
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+////        taskAdapter.notifyDataSetChanged();
+//    }
+
+    private void replaceFragment(Fragment fragment){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        fragmentTransaction.commit();
+
     }
 }
