@@ -9,10 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/primary"
+            android:visibility="visible" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recycler_view"
+            android:visibility="gone"
             />
 
     </RelativeLayout>
