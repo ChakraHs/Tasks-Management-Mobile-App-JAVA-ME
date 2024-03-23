@@ -16,6 +16,12 @@ public class Task {
         this.isDone = Boolean.FALSE;
     }
 
+    public Task(String title, String description, Boolean isDone) {
+        this.title = title;
+        this.description = description;
+        this.isDone = isDone;
+    }
+
 
     public String getTitle() {
         return title;

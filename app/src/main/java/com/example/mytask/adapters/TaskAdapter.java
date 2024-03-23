@@ -35,6 +35,10 @@ public class TaskAdapter extends FirestoreRecyclerAdapter<Task, TaskAdapter.Task
     Context context;
     FirebaseFirestore db;
     FirebaseUser currentUser;
+
+    private FragmentManager fragmentManager;
+
+    private LinkedList<Task> tasks;
     private static final String TAG = "TaskAdapter";
     public TaskAdapter(@NonNull FirestoreRecyclerOptions<Task> options, Context context) {
         super(options);
@@ -43,6 +47,17 @@ public class TaskAdapter extends FirestoreRecyclerAdapter<Task, TaskAdapter.Task
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         this.currentUser = mAuth.getCurrentUser();
         this.context = context;
+    }
+
+
+    public TaskAdapter(@NonNull FirestoreRecyclerOptions<Task> options,LinkedList<Task> tasks, Context context , FragmentManager fragmentManager ) {
+        super(options);
+        this.db = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        this.currentUser = mAuth.getCurrentUser();
+        this.tasks = tasks;
+        this.context = context;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -109,5 +124,9 @@ public class TaskAdapter extends FirestoreRecyclerAdapter<Task, TaskAdapter.Task
             timestampTextView = itemView.findViewById(R.id.task_timestamp_text_view);
             isDone = itemView.findViewById(R.id.done_checkbox);
         }
+
     }
+
+
+
 }
