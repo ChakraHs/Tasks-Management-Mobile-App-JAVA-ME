@@ -3,8 +3,11 @@ package com.example.mytask;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,6 +27,8 @@ public class TaskDetailsActivity extends AppCompatActivity {
     Boolean isEditMode = false;
 
     TextView deleteTaskTextViewBtn;
+
+    Button dialogButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,10 @@ public class TaskDetailsActivity extends AppCompatActivity {
         pageTitleTextView = findViewById(R.id.page_title);
         deleteTaskTextViewBtn = findViewById(R.id.delete_task_text_view_btn);
         returnBtn = findViewById(R.id.return_btn);
+
+        dialogButton = findViewById(R.id.dialog_button);
+
+        dialogButton.setOnClickListener(v->openDialog());
 
 
         //receive data
@@ -127,5 +136,15 @@ public class TaskDetailsActivity extends AppCompatActivity {
 
     void returnBack(){
         finish();
+    }
+
+    void openDialog(){
+        DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                dialogButton.setText(String.valueOf(year)+"."+String.valueOf(month));
+            }
+        },2024, 2, 24);
+        dialog.show();
     }
 }

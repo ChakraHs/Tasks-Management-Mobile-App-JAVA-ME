@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button myListButton, eventsButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

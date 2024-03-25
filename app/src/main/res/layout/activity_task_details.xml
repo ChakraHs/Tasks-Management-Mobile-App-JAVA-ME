@@ -74,6 +74,13 @@
             android:textColor="@color/black"
             android:gravity="top"
             />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dialog"
+            android:id="@+id/dialog_button"
+            />
+
     </LinearLayout>
 
     <TextView
