@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/user"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_shape"
+        >
+
+    </de.hdodenhof.circleimageview.CircleImageView>
+
+
+    <TextView
+        android:id="@+id/chang_profile_btn"
+        android:layout_below="@+id/profile_image"
+        android:text="Change Profile"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chang_profile_btn"
+        android:layout_centerHorizontal="true"
+        >
+
+        <Button
+            android:id="@+id/btn_close_image"
+            android:layout_width="157dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primary"
+            android:text="close"
+            android:layout_marginEnd="10dp"
+            />
+
+        <Button
+            android:id="@+id/save_profile_btn"
+            android:layout_width="157dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/black"
+            android:text="save" />
+    </LinearLayout>
+
+</RelativeLayout>
