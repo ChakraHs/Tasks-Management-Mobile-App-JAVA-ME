@@ -1,11 +1,14 @@
 package com.example.mytask;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,10 +17,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 
+import com.example.mytask.dao.FirebaseHelper;
 import com.example.mytask.fragments.EventsFragment;
 import com.example.mytask.fragments.TasksFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -45,12 +52,36 @@ public class MainActivity extends AppCompatActivity {
     Button myListButton, eventsButton;
 
 
+    TextView usernameTextView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         replaceFragment(new TasksFragment());
+
+        usernameTextView = findViewById(R.id.username_text_view);
+
+        FirebaseHelper firebaseHelper = new FirebaseHelper();
+        firebaseHelper.getUserDisplayName(
+                new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String username) {
+                        // Handle username retrieval success
+                        // Update UI with the username
+                        usernameTextView.setText(username);
+                    }
+                },
+                new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        // Display an error message or handle the failure appropriately
+                    }
+                }
+        );
 
         imageView = findViewById(R.id.profile_image);
 
@@ -71,6 +102,14 @@ public class MainActivity extends AppCompatActivity {
                         .setReorderingAllowed(true)
                         .addToBackStack("name") // Name can be null
                         .commit();
+                // Change style for "Tasks" button
+                myListButton.setTextColor(getResources().getColor(R.color.primary));
+                myListButton.setBackgroundColor(Color.parseColor("#D4E7F5"));
+                myListButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#D4E7F5")));
+
+                // Reset style for "Events" button
+                eventsButton.setTextColor(getResources().getColor(R.color.gray));
+                eventsButton.setBackgroundColor(getResources().getColor(android.R.color.white));
             }
         });
 
@@ -84,6 +123,14 @@ public class MainActivity extends AppCompatActivity {
                         .setReorderingAllowed(true)
                         .addToBackStack("name") // Name can be null
                         .commit();
+                // Change style for "Events" button
+                eventsButton.setTextColor(getResources().getColor(R.color.primary));
+                eventsButton.setBackgroundColor(Color.parseColor("#D4E7F5"));
+                eventsButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#D4E7F5")));
+
+                // Reset style for "Tasks" button
+                myListButton.setTextColor(getResources().getColor(R.color.gray));
+                myListButton.setBackgroundColor(getResources().getColor(android.R.color.white));
             }
         });
 

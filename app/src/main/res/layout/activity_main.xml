@@ -60,7 +60,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chakra houcine"
+            android:id="@+id/username_text_view"
+            android:text="username"
             android:textSize="22sp"
             android:layout_toEndOf="@id/profile_image"
             android:textStyle="bold"
