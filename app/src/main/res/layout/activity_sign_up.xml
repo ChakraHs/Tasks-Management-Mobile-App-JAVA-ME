@@ -49,6 +49,16 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/username_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_corner"
+            android:hint="Username"
+            android:padding="16dp"
+            android:textSize="20sp" />
+
+        <EditText
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -21,6 +21,11 @@ public class Utility {
         return FirebaseFirestore.getInstance().collection("tasks").document(currentUser.getUid()).collection("my_tasks");
     }
 
+    public static CollectionReference getCollectionReferenceForUser(){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("user").document(currentUser.getUid()).collection("my_tasks");
+    }
+
     public static String timestampToString(Timestamp timestamp){
         return new SimpleDateFormat("MM/dd/yyyy").format(timestamp.toDate());
     }
