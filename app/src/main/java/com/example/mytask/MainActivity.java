@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -71,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
                         .setReorderingAllowed(true)
                         .addToBackStack("name") // Name can be null
                         .commit();
+                // Change style for "Tasks" button
+                myListButton.setTextColor(getResources().getColor(R.color.primary));
+                myListButton.setBackgroundColor(Color.parseColor("#D4E7F5"));
+                myListButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#D4E7F5")));
+
+                // Reset style for "Events" button
+                eventsButton.setTextColor(getResources().getColor(R.color.gray));
+                eventsButton.setBackgroundColor(getResources().getColor(android.R.color.white));
             }
         });
 
@@ -84,6 +94,14 @@ public class MainActivity extends AppCompatActivity {
                         .setReorderingAllowed(true)
                         .addToBackStack("name") // Name can be null
                         .commit();
+                // Change style for "Events" button
+                eventsButton.setTextColor(getResources().getColor(R.color.primary));
+                eventsButton.setBackgroundColor(Color.parseColor("#D4E7F5"));
+                eventsButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#D4E7F5")));
+
+                // Reset style for "Tasks" button
+                myListButton.setTextColor(getResources().getColor(R.color.gray));
+                myListButton.setBackgroundColor(getResources().getColor(android.R.color.white));
             }
         });
 
