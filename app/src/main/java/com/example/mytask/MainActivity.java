@@ -142,7 +142,17 @@ public class MainActivity extends AppCompatActivity {
             Picasso.get().load(uri).into(imageView);
         }
 
-        addTaskBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TaskDetailsActivity.class)));
+        addTaskBtn.setOnClickListener(v -> {
+            // Check if the currently active fragment is the TasksFragment
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
+            if (currentFragment instanceof TasksFragment) {
+                // If the current fragment is TasksFragment, navigate to TaskDetailsActivity
+                startActivity(new Intent(MainActivity.this, TaskDetailsActivity.class));
+            } else {
+                // If the current fragment is not TasksFragment, navigate to EventDetailsActivity
+                startActivity(new Intent(MainActivity.this, EventDetailsActivity.class));
+            }
+        });
         menuBtn.setOnClickListener(v -> showMenu());
         userInfosLayout.setOnClickListener( v -> {
             startActivity(new Intent(MainActivity.this,ProfileActivity.class));
