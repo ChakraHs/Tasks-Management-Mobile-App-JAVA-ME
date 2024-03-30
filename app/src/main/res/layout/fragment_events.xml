@@ -5,14 +5,25 @@
     android:layout_height="match_parent"
     tools:context=".fragments.EventsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Events comming son"
-        android:gravity="center"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        />
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/primary"
+            android:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler_view"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
 
 </FrameLayout>

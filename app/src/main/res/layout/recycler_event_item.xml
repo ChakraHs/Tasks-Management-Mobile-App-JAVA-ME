@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/shadow_background"
+    android:backgroundTint="@color/white"
+    android:elevation="8dp"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:layout_marginHorizontal="10dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- ImageView for event image -->
+        <ImageView
+            android:id="@+id/event_image_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:id="@+id/event_details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/event_image_view">
+
+            <TextView
+                android:id="@+id/event_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:text="Event Title"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:maxLines="1" />
+
+            <TextView
+                android:id="@+id/event_description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/event_title_text_view"
+                android:layout_marginVertical="4dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Event description that can be long"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/event_timestamp_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/event_description_text_view"
+                android:layout_marginVertical="4dp"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:maxLines="1"
+                android:text="Event Timestamp"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

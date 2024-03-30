@@ -95,13 +95,16 @@
             <Button
                 android:id="@+id/events_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:layout_marginLeft="5dp"
                 android:backgroundTint="@color/white"
                 android:paddingVertical="0dp"
                 android:text="Events"
                 android:textColor="@color/gray"
-                android:textSize="14sp" />
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:backgroundTintMode="add"
+                />
         </LinearLayout>
 
     </RelativeLayout>
