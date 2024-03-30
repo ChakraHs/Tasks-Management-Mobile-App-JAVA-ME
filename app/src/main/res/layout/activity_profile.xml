@@ -6,42 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:src="@drawable/user"
-        android:scaleType="centerCrop"
-        android:background="@drawable/circle_shape"
+        android:id="@+id/image_container"
         >
 
-    </de.hdodenhof.circleimageview.CircleImageView>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/user"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_shape" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/chang_profile_btn"
-        android:layout_below="@+id/profile_image"
-        android:text="Change Profile"
-        android:layout_centerHorizontal="true"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/username_container"
+        android:layout_below="@+id/image_container"
+        android:paddingHorizontal="30dp"
         android:layout_marginVertical="20dp"
-
-        />
+        >
+        <TextView
+            android:id="@+id/chang_profile_btn"
+            android:text="Username"
+            android:layout_centerHorizontal="true"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/username_edit_text"
+            android:background="@drawable/rounded_corner"
+            android:paddingHorizontal="16dp"
+            android:textSize="20sp"
+            android:text="username"
+            android:paddingVertical="10dp"
+            android:layout_marginLeft="15dp"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chang_profile_btn"
+        android:layout_below="@+id/username_container"
         android:layout_centerHorizontal="true"
         >
 
         <Button
-            android:id="@+id/btn_close_image"
+            android:id="@+id/close_btn"
             android:layout_width="157dp"
             android:layout_height="68dp"
             android:layout_marginTop="20dp"

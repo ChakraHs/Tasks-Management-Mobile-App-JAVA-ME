@@ -15,7 +15,6 @@ public class Utility {
     static void showToast(Context context, String message){
         Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
     }
-
     public static CollectionReference getCollectionReferenceForTask(){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         return FirebaseFirestore.getInstance().collection("tasks").document(currentUser.getUid()).collection("my_tasks");
@@ -24,6 +23,12 @@ public class Utility {
     public static CollectionReference getCollectionReferenceForUser(){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         return FirebaseFirestore.getInstance().collection("user").document(currentUser.getUid()).collection("my_tasks");
+    }
+
+    // Get Collection Reference for Events
+    public static CollectionReference getCollectionReferenceForEvent() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("events").document(currentUser.getUid()).collection("my_events");
     }
 
     public static String timestampToString(Timestamp timestamp){
