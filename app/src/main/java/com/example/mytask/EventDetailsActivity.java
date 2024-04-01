@@ -42,7 +42,6 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     TextView deleteEventTextViewBtn;
 
-    Button dialogButton;
 
 
     FirebaseAuth firebaseAuth;
@@ -67,13 +66,8 @@ public class EventDetailsActivity extends AppCompatActivity {
         deleteEventTextViewBtn = findViewById(R.id.delete_event_text_view_btn);
         returnBtn = findViewById(R.id.return_btn);
         eventImageView = findViewById(R.id.event_image);
-
-        dialogButton = findViewById(R.id.dialog_button);
-
-        // Set onClickListener for the dialogButton
-        dialogButton.setOnClickListener(v -> openDialog());
+        
         eventImageView.setOnClickListener(v->openFileChosen());
-
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -171,11 +165,6 @@ public class EventDetailsActivity extends AppCompatActivity {
     // Method to finish the activity
     void returnBack() {
         finish();
-    }
-
-    // Method to open the dialog
-    void openDialog() {
-        // Implement your logic for opening a dialog here
     }
 
     void  openFileChosen(){

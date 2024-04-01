@@ -80,4 +80,13 @@ public class EventsFragment extends Fragment {
             eventAdapter.stopListening();
         }
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (eventAdapter != null) {
+            eventAdapter.notifyDataSetChanged();
+        }
+    }
 }
