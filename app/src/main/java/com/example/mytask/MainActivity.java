@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        replaceFragment(new TasksFragment());
+        replaceFragment(new EventsFragment());
 
         usernameTextView = findViewById(R.id.username_text_view);
 
