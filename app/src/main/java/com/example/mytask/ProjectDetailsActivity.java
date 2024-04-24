@@ -95,17 +95,17 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         if(isEditMode){
             //update the task
-            documentReference = Utility.getCollectionReferenceForTask().document(docId);
+            documentReference = Utility.getCollectionReferenceForProject().document(docId);
         }else{
             //create new task
-            documentReference = Utility.getCollectionReferenceForTask().document();
+            documentReference = Utility.getCollectionReferenceForProject().document();
         }
         documentReference.set(task).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
                 if(task.isSuccessful()){
                     //task is added
-                    Utility.showToast(ProjectDetailsActivity.this,"Task added successfully");
+                    Utility.showToast(ProjectDetailsActivity.this,"Project added successfully");
                     finish();
                 }else{
                     //failed
