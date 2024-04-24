@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.mytask.dao.FirebaseHelper;
 import com.example.mytask.fragments.EventsFragment;
+import com.example.mytask.fragments.ProjectFragment;
 import com.example.mytask.fragments.TasksFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     CircleImageView imageView;
 
 
-    Button myListButton, eventsButton;
+    Button myListButton, eventsButton, projectsButton;
 
 
     TextView usernameTextView;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         myListButton = findViewById(R.id.my_tasks_btn);
         eventsButton = findViewById(R.id.events_btn);
+        projectsButton = findViewById(R.id.projects_btn);
 
         myListButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
                 // Reset style for "Events" button
                 eventsButton.setTextColor(getResources().getColor(R.color.gray));
                 eventsButton.setBackgroundColor(getResources().getColor(android.R.color.white));
+
+                // Reset style for "Projects" button
+                projectsButton.setTextColor(getResources().getColor(R.color.gray));
+                projectsButton.setBackgroundColor(getResources().getColor(android.R.color.white));
             }
         });
 
@@ -131,6 +137,34 @@ public class MainActivity extends AppCompatActivity {
                 // Reset style for "Tasks" button
                 myListButton.setTextColor(getResources().getColor(R.color.gray));
                 myListButton.setBackgroundColor(getResources().getColor(android.R.color.white));
+
+                // Reset style for "Projects" button
+                projectsButton.setTextColor(getResources().getColor(R.color.gray));
+                projectsButton.setBackgroundColor(getResources().getColor(android.R.color.white));
+            }
+        });
+
+        projectsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, ProjectFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+                // Change style for "Events" button
+                projectsButton.setTextColor(getResources().getColor(R.color.primary));
+                projectsButton.setBackgroundColor(Color.parseColor("#D4E7F5"));
+                projectsButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#D4E7F5")));
+
+                // Reset style for "Tasks" button
+                myListButton.setTextColor(getResources().getColor(R.color.gray));
+                myListButton.setBackgroundColor(getResources().getColor(android.R.color.white));
+
+                // Reset style for "Events" button
+                eventsButton.setTextColor(getResources().getColor(R.color.gray));
+                eventsButton.setBackgroundColor(getResources().getColor(android.R.color.white));
             }
         });
 
@@ -148,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
             if (currentFragment instanceof TasksFragment) {
                 // If the current fragment is TasksFragment, navigate to TaskDetailsActivity
                 startActivity(new Intent(MainActivity.this, TaskDetailsActivity.class));
+            }else if (currentFragment instanceof ProjectFragment) {
+                // If the current fragment is TasksFragment, navigate to TaskDetailsActivity
+                startActivity(new Intent(MainActivity.this, ProjectDetailsActivity.class));
             } else {
                 // If the current fragment is not TasksFragment, navigate to EventDetailsActivity
                 startActivity(new Intent(MainActivity.this, EventDetailsActivity.class));

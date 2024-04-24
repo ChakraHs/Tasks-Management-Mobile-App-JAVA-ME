@@ -91,12 +91,13 @@
                 android:textSize="14sp"
                 android:backgroundTint="#D4E7F5"
                 android:backgroundTintMode="add"
+                android:paddingHorizontal="0dp"
                 />
             <Button
                 android:id="@+id/events_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="0dp"
                 android:backgroundTint="@color/white"
                 android:paddingVertical="0dp"
                 android:text="Events"
@@ -104,6 +105,21 @@
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:backgroundTintMode="add"
+                android:paddingHorizontal="0dp"
+                />
+            <Button
+                android:id="@+id/projects_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="0dp"
+                android:backgroundTint="@color/white"
+                android:paddingVertical="0dp"
+                android:text="Projects"
+                android:textColor="@color/gray"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:backgroundTintMode="add"
+                android:paddingHorizontal="0dp"
                 />
         </LinearLayout>
 
