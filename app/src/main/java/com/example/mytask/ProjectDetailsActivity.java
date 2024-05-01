@@ -2,9 +2,12 @@ package com.example.mytask;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,14 +15,27 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.mytask.adapters.EventAdapter;
+import com.example.mytask.adapters.UserAdapter;
+import com.example.mytask.models.Event;
 import com.example.mytask.models.Task;
+import com.example.mytask.models.User;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectDetailsActivity extends AppCompatActivity {
 
     EditText titleEditText, descriptionEditText;
+
+    private RecyclerView usersRecyclerView;
     ImageButton saveTaskbtn,returnBtn;
 
     TextView pageTitleTextView;
@@ -28,7 +44,9 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
     TextView deleteTaskTextViewBtn;
 
-    Button dialogButton;
+    String TAG = "Users";
+
+    private UserAdapter userAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +59,10 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         deleteTaskTextViewBtn = findViewById(R.id.delete_project_text_view_btn);
         returnBtn = findViewById(R.id.return_btn);
 
-        dialogButton = findViewById(R.id.dialog_button);
+//        dialogButton = findViewById(R.id.dialog_button);
 
-        dialogButton.setOnClickListener(v->openDialog());
+
+//        dialogButton.setOnClickListener(v->openDialog());
 
 
         //receive data
@@ -69,6 +88,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         deleteTaskTextViewBtn.setOnClickListener( v -> deleteTaskFromFirebase());
 
         returnBtn.setOnClickListener(v-> returnBack());
+
+        usersRecyclerView = findViewById(R.id.recyclerViewUsers);
+
+        // Initialize views here...
+        setupUsersRecyclerView(); // Load users
     }
 
     void saveTask(){
@@ -135,13 +159,47 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         finish();
     }
 
-    void openDialog(){
-        DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                dialogButton.setText(String.valueOf(year)+"."+String.valueOf(month));
-            }
-        },2024, 2, 24);
-        dialog.show();
+
+
+
+    private void setupUsersRecyclerView() {
+        Query query = Utility.getCollectionReferenceForUser();
+        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class).build();
+
+        usersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        userAdapter = new UserAdapter(options, this);
+        usersRecyclerView.setAdapter(userAdapter);
+
+        // Hide the progress bar
+//        progressBar.setVisibility(View.GONE);
+        // Show the RecyclerView
+//        usersRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (userAdapter != null) {
+            userAdapter.startListening();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (userAdapter != null) {
+            userAdapter.stopListening();
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (userAdapter != null) {
+            userAdapter.notifyDataSetChanged();
+        }
     }
 }

@@ -127,6 +127,4 @@ public class TaskAdapter extends FirestoreRecyclerAdapter<Task, TaskAdapter.Task
 
     }
 
-
-
 }

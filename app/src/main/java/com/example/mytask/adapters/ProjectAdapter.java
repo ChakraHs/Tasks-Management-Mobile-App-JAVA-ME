@@ -127,7 +127,4 @@ public class ProjectAdapter extends FirestoreRecyclerAdapter<Project, ProjectAda
         }
 
     }
-
-
-
 }

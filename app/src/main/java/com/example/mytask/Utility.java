@@ -26,8 +26,7 @@ public class Utility {
     }
 
     public static CollectionReference getCollectionReferenceForUser(){
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        return FirebaseFirestore.getInstance().collection("user").document(currentUser.getUid()).collection("my_tasks");
+        return FirebaseFirestore.getInstance().collection("users");
     }
 
     // Get Collection Reference for Events

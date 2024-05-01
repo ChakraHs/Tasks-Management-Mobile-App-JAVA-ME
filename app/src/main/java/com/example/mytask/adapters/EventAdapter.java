@@ -2,6 +2,7 @@ package com.example.mytask.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class EventAdapter extends FirestoreRecyclerAdapter<Event, EventAdapter.E
 
     @Override
     protected void onBindViewHolder(@NonNull EventViewHolder holder, int position, @NonNull Event event) {
+        Log.d("UserAdapter", "Binding view holder: ");
         holder.titleTextView.setText(event.getTitle());
         holder.descriptionTextView.setText(event.getDescription());
         holder.timestampTextView.setText(Utility.timestampToString(event.getTimestamp()));
