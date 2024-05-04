@@ -29,12 +29,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Objects;
 
 public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.UserViewHolder> {
 
     Context context;
+    HashSet<String> selectedUsers = new HashSet<>(); // Stores emails of selected users
 
     public UserAdapter(@NonNull FirestoreRecyclerOptions<User> options, Context context) {
         super(options);
@@ -48,10 +50,15 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
         holder.email.setText(user.getEmail());
         holder.username.setText(user.getUsername());
 
-        holder.isSelected.setOnCheckedChangeListener(null); // Prevent unwanted listener calls during recycling
-        holder.isSelected.setChecked(user.isSelected()); // Correctly reflect the current state
+        // Check if the user is selected
+        holder.isSelected.setChecked(selectedUsers.contains(user.getEmail()));
+
         holder.isSelected.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            user.setSelected(isChecked); // Update user object or handle selection state persistence
+            if (isChecked) {
+                selectedUsers.add(user.getEmail());
+            } else {
+                selectedUsers.remove(user.getEmail());
+            }
         });
 
         holder.itemView.setOnClickListener(v -> {
@@ -85,6 +92,9 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
             Log.d("UserAdapter", "Binding view holder: passed params");
         }
 
+    }
+    public HashSet<String> getSelectedUsers() {
+        return selectedUsers; // Return the set of selected user emails
     }
 
 }

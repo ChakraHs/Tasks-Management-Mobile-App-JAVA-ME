@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.mytask.adapters.EventAdapter;
 import com.example.mytask.adapters.UserAdapter;
 import com.example.mytask.models.Event;
+import com.example.mytask.models.Project;
 import com.example.mytask.models.Task;
 import com.example.mytask.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class ProjectDetailsActivity extends AppCompatActivity {
@@ -36,7 +38,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     EditText titleEditText, descriptionEditText;
 
     private RecyclerView usersRecyclerView;
-    ImageButton saveTaskbtn,returnBtn;
+    ImageButton saveProjectBtn,returnBtn;
 
     TextView pageTitleTextView;
     String title,description,docId;
@@ -54,7 +56,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         titleEditText = findViewById(R.id.project_title_text);
         descriptionEditText = findViewById(R.id.project_description_text);
-        saveTaskbtn = findViewById(R.id.save_project_btn);
+        saveProjectBtn = findViewById(R.id.save_project_btn);
         pageTitleTextView = findViewById(R.id.page_title);
         deleteTaskTextViewBtn = findViewById(R.id.delete_project_text_view_btn);
         returnBtn = findViewById(R.id.return_btn);
@@ -83,9 +85,9 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         }
 
 
-        saveTaskbtn.setOnClickListener(v -> saveTask());
+        saveProjectBtn.setOnClickListener(v -> saveProject());
 
-        deleteTaskTextViewBtn.setOnClickListener( v -> deleteTaskFromFirebase());
+        deleteTaskTextViewBtn.setOnClickListener( v -> deleteProjectFromFirebase());
 
         returnBtn.setOnClickListener(v-> returnBack());
 
@@ -95,26 +97,32 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         setupUsersRecyclerView(); // Load users
     }
 
-    void saveTask(){
+    void saveProject(){
 
-        String taskTitle = titleEditText.getText().toString();
-        String taskDescription = descriptionEditText.getText().toString();
+        String projectTitle = titleEditText.getText().toString();
+        String projectDescription = descriptionEditText.getText().toString();
 
-        if(taskTitle.isEmpty()){
+        if(projectTitle.isEmpty()){
             titleEditText.setError("Title is required");
             return;
         }
 
-        Task task = new Task();
-        task.setTitle(taskTitle);
-        task.setDescription(taskDescription);
-        task.setTimestamp(Timestamp.now());
+        // Example method to handle save action
+        HashSet<String> selectedEmails = userAdapter.getSelectedUsers();  // Retrieve selected emails
 
-        saveTaskToFirebase(task);
+        Project project = new Project();
+        // Convert HashSet to List when needed
+        List<String> collaboratorsList = new ArrayList<>(selectedEmails);
+        project.setCollaborators(collaboratorsList);
+        project.setTitle(projectTitle);
+        project.setDescription(projectDescription);
+        project.setTimestamp(Timestamp.now());
+
+        saveProjectToFirebase(project);
 
     }
 
-    void saveTaskToFirebase(Task task){
+    void saveProjectToFirebase(Project project){
         DocumentReference documentReference;
 
         if(isEditMode){
@@ -124,7 +132,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             //create new task
             documentReference = Utility.getCollectionReferenceForProject().document();
         }
-        documentReference.set(task).addOnCompleteListener(new OnCompleteListener<Void>() {
+        documentReference.set(project).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
                 if(task.isSuccessful()){
@@ -139,7 +147,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         });
     }
 
-    void deleteTaskFromFirebase(){
+    void deleteProjectFromFirebase(){
         DocumentReference documentReference;
         documentReference = Utility.getCollectionReferenceForProject().document(docId);
         documentReference.delete().addOnCompleteListener(task -> {
