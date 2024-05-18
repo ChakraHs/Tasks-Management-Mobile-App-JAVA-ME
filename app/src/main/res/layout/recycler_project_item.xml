@@ -18,9 +18,9 @@
 
         <RelativeLayout
             android:id="@+id/one_project"
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="0dp"
             >
 
             <TextView
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:text="project title"
-                android:textColor="@color/black"
+                android:textColor="@color/primary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:maxLines="1"
@@ -51,38 +51,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/project_description_text_view"
+                android:layout_alignParentStart="true"
                 android:layout_marginVertical="4dp"
+                android:layout_marginStart="0dp"
                 android:ellipsize="end"
                 android:gravity="right"
                 android:maxLines="2"
-                android:text="timestamp"
+                android:text="Created at "
                 android:textSize="12sp" />
 
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textStyle="bold"
-            android:text="18:00"
-            android:layout_alignParentEnd="true"
-            android:textSize="22sp"
-            android:textColor="@color/primary"
-            />
-
-        <CheckBox
-            android:id="@+id/done_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
-            android:buttonTint="@color/primary"
-            android:backgroundTintMode="add"
-            />
     </RelativeLayout>
 
 

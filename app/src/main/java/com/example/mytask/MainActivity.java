@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -24,6 +25,7 @@ import com.example.mytask.dao.FirebaseHelper;
 import com.example.mytask.fragments.EventsFragment;
 import com.example.mytask.fragments.ProjectFragment;
 import com.example.mytask.fragments.TasksFragment;
+import com.example.mytask.viewmodel.UserViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private UserViewModel userViewModel;
 //    FloatingActionButton addTaskBtn;
     ImageButton addTaskBtn;
 //    RecyclerView recyclerView;
@@ -65,24 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
         usernameTextView = findViewById(R.id.username_text_view);
 
-        FirebaseHelper firebaseHelper = new FirebaseHelper();
-        firebaseHelper.getUserDisplayName(
-                new OnSuccessListener<String>() {
-                    @Override
-                    public void onSuccess(String username) {
-                        // Handle username retrieval success
-                        // Update UI with the username
-                        usernameTextView.setText(username);
-                    }
-                },
-                new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Handle failure
-                        // Display an error message or handle the failure appropriately
-                    }
-                }
-        );
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getUsername().observe(this, username -> {
+            if (username != null) {
+                usernameTextView.setText(username);
+            } else {
+                usernameTextView.setText("Username not available");
+            }
+        });
 
         imageView = findViewById(R.id.profile_image);
 

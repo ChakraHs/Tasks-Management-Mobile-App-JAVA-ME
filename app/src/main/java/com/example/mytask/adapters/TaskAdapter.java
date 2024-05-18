@@ -62,10 +62,19 @@ public class TaskAdapter extends FirestoreRecyclerAdapter<Task, TaskAdapter.Task
 
     @Override
     protected void onBindViewHolder(@NonNull TaskViewHolder holder, int position, @NonNull Task task) {
-        holder.titleTextView.setText(task.getTitle());
+        Utility.setTextViewMaxCharacters(task.getTitle(), 18);
+        holder.titleTextView.setText(Utility.setTextViewMaxCharacters(task.getTitle(), 18));
         holder.descriptionTextView.setText(task.getDescription());
-        holder.timestampTextView.setText(Utility.timestampToString(task.getTimestamp()));
         holder.isDone.setChecked(task.getIsDone());
+
+        // Set the end time of the task if available
+        if (task.getEndTimestamp() != null) {
+            holder.endTimeTextView.setText(Utility.timestampToTime(task.getEndTimestamp()));
+            holder.timestampTextView.setText(Utility.timestampToString(task.getEndTimestamp()));
+        } else {
+            holder.endTimeTextView.setText("18:00"); // Clear text if end time is not available
+            holder.timestampTextView.setText(Utility.timestampToString(task.getTimestamp()));
+        }
 
         holder.isDone.setOnCheckedChangeListener(null); // To prevent unwanted triggering of listener
 
@@ -115,18 +124,17 @@ public class TaskAdapter extends FirestoreRecyclerAdapter<Task, TaskAdapter.Task
 
     class TaskViewHolder extends RecyclerView.ViewHolder{
 
-        TextView titleTextView,descriptionTextView,timestampTextView;
+        TextView titleTextView,descriptionTextView,timestampTextView,endTimeTextView;
         CheckBox isDone;
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.task_title_text_view);
             descriptionTextView = itemView.findViewById(R.id.task_description_text_view);
             timestampTextView = itemView.findViewById(R.id.task_timestamp_text_view);
+            endTimeTextView = itemView.findViewById(R.id.time);
             isDone = itemView.findViewById(R.id.done_checkbox);
         }
 
     }
-
-
 
 }
