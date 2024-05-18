@@ -2,20 +2,28 @@ package com.example.mytask.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mytask.MainActivity;
+import com.example.mytask.OneProjectActivity;
+import com.example.mytask.ProfileActivity;
 import com.example.mytask.ProjectDetailsActivity;
 import com.example.mytask.R;
+import com.example.mytask.SignInActivity;
 import com.example.mytask.TaskDetailsActivity;
 import com.example.mytask.Utility;
 import com.example.mytask.models.Project;
@@ -29,6 +37,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -68,15 +77,39 @@ public class ProjectAdapter extends FirestoreRecyclerAdapter<Project, ProjectAda
         holder.descriptionTextView.setText(project.getDescription());
         holder.timestampTextView.setText("Created at " + Utility.timestampToString(project.getTimestamp()));
 
+        // Store original colors
+        int originalTextColor = holder.titleTextView.getCurrentTextColor();
+        ColorStateList originalBackgroundColor = holder.itemView.getBackgroundTintList();
+
 
         holder.itemView.setOnClickListener(v->{
-            Intent intent = new Intent(context, ProjectDetailsActivity.class);
-            intent.putExtra("title",project.getTitle());
-            intent.putExtra("description",project.getDescription());
-            String docId = this.getSnapshots().getSnapshot(position).getId();
-            intent.putExtra("docId",docId);
+            Intent intent = new Intent(context, OneProjectActivity.class);
+            intent.putExtra("title", project.getTitle());
+            intent.putExtra("description", project.getDescription());
+            String docId = getSnapshots().getSnapshot(position).getId();
+            intent.putExtra("docId", docId);
+
+            // Convert the list of tasks to ArrayList and pass it
+            ArrayList<Task> taskList = new ArrayList<>(project.getTasks());
+            intent.putExtra("tasks", taskList);
+
             context.startActivity(intent);
         });
+
+        holder.itemView.setOnLongClickListener(v->{
+            holder.titleTextView.setTextColor(context.getResources().getColor(R.color.black));
+            holder.itemView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#D4E7F5")));
+
+            // Show the menu
+            PopupMenu popupMenu = showMenu(v, position, project);
+
+            // Set on dismiss listener
+            setOnDismissListener(popupMenu, holder, originalTextColor, originalBackgroundColor);
+
+            return true;
+        });
+
+
     }
 
     @NonNull
@@ -96,4 +129,55 @@ public class ProjectAdapter extends FirestoreRecyclerAdapter<Project, ProjectAda
             timestampTextView = itemView.findViewById(R.id.task_timestamp_text_view);
         }
     }
+
+    private PopupMenu showMenu(View view, int position, Project project) {
+        PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+        popupMenu.getMenu().add("Edit");
+        popupMenu.getMenu().add("Delete");
+        popupMenu.show();
+
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            switch (menuItem.getTitle().toString()) {
+                case "Edit":
+                    editProject(project, position);
+                    return true;
+                case "Delete":
+                    deleteProject(position);
+                    return true;
+                default:
+                    return false;
+            }
+        });
+
+        return popupMenu;
+    }
+
+    private void editProject(Project project, int position) {
+        Intent intent = new Intent(context, ProjectDetailsActivity.class);
+        intent.putExtra("title", project.getTitle());
+        intent.putExtra("description", project.getDescription());
+        String docId = getSnapshots().getSnapshot(position).getId();
+        intent.putExtra("docId", docId);
+        context.startActivity(intent);
+    }
+
+    private void deleteProject(int position) {
+        String docId = getSnapshots().getSnapshot(position).getId();
+        DocumentReference projectRef = Utility.getCollectionReferenceForProject().document(docId);
+        projectRef.delete()
+                .addOnSuccessListener(aVoid -> Utility.showToast(context, "Project deleted successfully"))
+                .addOnFailureListener(e -> Utility.showToast(context, "Error deleting project"));
+    }
+
+    private void setOnDismissListener(PopupMenu popupMenu, ProjectViewHolder holder, int originalTextColor, ColorStateList originalBackgroundColor) {
+        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+            @Override
+            public void onDismiss(PopupMenu menu) {
+                // Reset colors when the menu is dismissed
+                holder.titleTextView.setTextColor(originalTextColor);
+                holder.itemView.setBackgroundTintList(originalBackgroundColor);
+            }
+        });
+    }
+
 }

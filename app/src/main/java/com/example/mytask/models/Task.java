@@ -3,7 +3,9 @@ package com.example.mytask.models;
 
 import com.google.firebase.Timestamp;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
 
     private String id ;
     String title;
@@ -22,6 +24,14 @@ public class Task {
         this.isDone = isDone;
     }
 
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
