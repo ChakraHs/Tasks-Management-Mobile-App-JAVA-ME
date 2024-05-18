@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mytask.ProjectDetailsActivity;
 import com.example.mytask.R;
 import com.example.mytask.TaskDetailsActivity;
 import com.example.mytask.Utility;
@@ -65,40 +66,11 @@ public class ProjectAdapter extends FirestoreRecyclerAdapter<Project, ProjectAda
     protected void onBindViewHolder(@NonNull ProjectViewHolder holder, int position, @NonNull Project project) {
         holder.titleTextView.setText(project.getTitle());
         holder.descriptionTextView.setText(project.getDescription());
-        holder.timestampTextView.setText(Utility.timestampToString(project.getTimestamp()));
-        holder.isDone.setChecked(project.getIsDone());
+        holder.timestampTextView.setText("Created at " + Utility.timestampToString(project.getTimestamp()));
 
-        holder.isDone.setOnCheckedChangeListener(null); // To prevent unwanted triggering of listener
-
-        holder.isDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            private static final String TAG = "TASK_ITEM";
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                DocumentReference userTasksRef;
-                String docId = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
-                userTasksRef = Utility.getCollectionReferenceForTask().document(docId);
-                // Traitement à effectuer lorsque la case est cochée ou décochée
-                if (isChecked) {
-                    userTasksRef
-                            .update("isDone",true)
-                            .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully updated!"))
-                            .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
-
-                } else {
-
-                    userTasksRef
-                            .update("isDone",false)
-                            .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully updated!"))
-                            .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
-
-
-                }
-            }
-        });
 
         holder.itemView.setOnClickListener(v->{
-            Intent intent = new Intent(context, TaskDetailsActivity.class);
+            Intent intent = new Intent(context, ProjectDetailsActivity.class);
             intent.putExtra("title",project.getTitle());
             intent.putExtra("description",project.getDescription());
             String docId = this.getSnapshots().getSnapshot(position).getId();
@@ -117,14 +89,11 @@ public class ProjectAdapter extends FirestoreRecyclerAdapter<Project, ProjectAda
     class ProjectViewHolder extends RecyclerView.ViewHolder{
 
         TextView titleTextView,descriptionTextView,timestampTextView;
-        CheckBox isDone;
         public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.project_title_text_view);
             descriptionTextView = itemView.findViewById(R.id.project_description_text_view);
             timestampTextView = itemView.findViewById(R.id.task_timestamp_text_view);
-            isDone = itemView.findViewById(R.id.done_checkbox);
         }
-
     }
 }

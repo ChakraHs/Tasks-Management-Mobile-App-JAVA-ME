@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add new project"
+            android:text="Add project"
             android:id="@+id/page_title"
             android:textSize="28sp"
             android:textColor="@color/white"
@@ -67,7 +67,7 @@
             />
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="150dp"
             android:id="@+id/project_description_text"
             android:hint="Description"
             android:textSize="20sp"

@@ -8,7 +8,7 @@ public class Task {
     private String id ;
     String title;
     String description;
-    Timestamp timestamp;
+    Timestamp timestamp, endTimestamp;
 
     Boolean isDone;
 
@@ -45,6 +45,14 @@ public class Task {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Timestamp getEndTimestamp() {
+        return endTimestamp;
+    }
+
+    public void setEndTimestamp(Timestamp endTimestamp) {
+        this.endTimestamp = endTimestamp;
     }
 
     public Boolean getIsDone() {

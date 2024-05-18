@@ -79,7 +79,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         if(isEditMode){
             titleEditText.setText(title);
             descriptionEditText.setText(description);
-            pageTitleTextView.setText("Edit task");
+            pageTitleTextView.setText("Edit Project");
 
             deleteTaskTextViewBtn.setVisibility(View.VISIBLE);
         }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,11 +12,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.mytask.models.Task;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class TaskDetailsActivity extends AppCompatActivity {
 
@@ -28,7 +36,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
 
     TextView deleteTaskTextViewBtn;
 
-    Button dialogButton;
+    Button dateButton, timeButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +49,11 @@ public class TaskDetailsActivity extends AppCompatActivity {
         deleteTaskTextViewBtn = findViewById(R.id.delete_task_text_view_btn);
         returnBtn = findViewById(R.id.return_btn);
 
-        dialogButton = findViewById(R.id.dialog_button);
+        dateButton = findViewById(R.id.taskDate);
+        timeButton = findViewById(R.id.taskTime);
 
-        dialogButton.setOnClickListener(v->openDialog());
+        dateButton.setOnClickListener(v->openDateDialog());
+        timeButton.setOnClickListener(v->openTimeDialog());
 
 
         //receive data
@@ -76,6 +86,19 @@ public class TaskDetailsActivity extends AppCompatActivity {
         String taskTitle = titleEditText.getText().toString();
         String taskDescription = descriptionEditText.getText().toString();
 
+        // Get selected date and time from buttons
+        String date = dateButton.getText().toString();
+        String time = timeButton.getText().toString();
+
+        if(time.isEmpty()){
+            timeButton.setError("time is required");
+            return;
+        }
+        if(date.isEmpty()){
+            dateButton.setError("date is required");
+            return;
+        }
+
         if(taskTitle.isEmpty()){
             titleEditText.setError("Title is required");
             return;
@@ -85,6 +108,17 @@ public class TaskDetailsActivity extends AppCompatActivity {
         task.setTitle(taskTitle);
         task.setDescription(taskDescription);
         task.setTimestamp(Timestamp.now());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC+1")); // Set time zone to UTC+1
+        try {
+            Date dateTime = sdf.parse(date + " " + time);
+            if (dateTime != null) {
+                task.setEndTimestamp(new Timestamp(dateTime));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         saveTaskToFirebase(task);
 
@@ -138,13 +172,24 @@ public class TaskDetailsActivity extends AppCompatActivity {
         finish();
     }
 
-    void openDialog(){
+    void openDateDialog(){
         DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                dialogButton.setText(String.valueOf(year)+"."+String.valueOf(month));
+                dateButton.setText(String.format(Locale.getDefault(), "%d.%02d.%02d", year, month + 1, dayOfMonth));
             }
         },2024, 2, 24);
+        dialog.show();
+    }
+
+    void openTimeDialog() {
+        TimePickerDialog dialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                // Display the selected time
+                timeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+            }
+        }, 12, 0, false); // Default time is 12:00 AM (false indicates 12-hour format)
         dialog.show();
     }
 }
