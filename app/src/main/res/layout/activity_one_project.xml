@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="0dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary"
+        android:background="@color/primary"
+        android:paddingVertical="8dp"
+        >
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow"
+            android:id="@+id/return_btn"
+            android:background="@color/primary"
+            android:paddingHorizontal="20dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+    <TextView
+        android:id="@+id/project_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="Project Title" />
+
+    <TextView
+        android:id="@+id/project_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        android:text="Project Description" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Project Tasks"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/primary"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/tasks_recycler_view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginTop="16dp" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:background="@drawable/shadow_background"
+                android:backgroundTint="@color/white"
+                android:elevation="8dp"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:layout_marginHorizontal="10dp"
+                android:id="@+id/firstTask"
+                >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/one_task"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/task_title_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="4dp"
+                            android:text="First task"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:maxLines="1"
+                            android:maxLength="18"
+                            />
+
+                        <TextView
+                            android:id="@+id/task_description_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/task_title_text_view"
+                            android:layout_marginVertical="4dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="this can be task description that can be long"
+                            android:textSize="17sp" />
+                        <TextView
+                            android:id="@+id/task_description_text_view2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/task_description_text_view"
+                            android:layout_marginVertical="4dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Assigned to Chakra Lahoucine"
+                            android:textStyle="bold"
+                            android:textSize="17sp" />
+
+                        <TextView
+                            android:id="@+id/task_timestamp_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/task_description_text_view2"
+                            android:layout_marginVertical="4dp"
+                            android:ellipsize="end"
+                            android:gravity="right"
+                            android:maxLines="2"
+                            android:text="18/052024"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="4dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        android:text="21:00"
+                        android:layout_alignParentEnd="true"
+                        android:textSize="22sp"
+                        android:textColor="@color/primary"
+                        />
+
+                    <CheckBox
+                        android:id="@+id/done_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:buttonTint="@color/primary"
+                        android:backgroundTintMode="add"
+                        />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:background="@drawable/shadow_background"
+                android:backgroundTint="@color/white"
+                android:elevation="8dp"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:layout_marginHorizontal="10dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/one_task22"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/task_title_text_view22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="4dp"
+                            android:text="second task"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:maxLines="1"
+                            android:maxLength="18"
+                            />
+
+                        <TextView
+                            android:id="@+id/task_description_text_view22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/task_title_text_view22"
+                            android:layout_marginVertical="4dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="this can be task description that can be long"
+                            android:textSize="17sp" />
+                        <TextView
+                            android:id="@+id/task_description_text_view23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/task_description_text_view22"
+                            android:layout_marginVertical="4dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Assigned to Ismail Telhouni"
+                            android:textStyle="bold"
+                            android:textSize="17sp" />
+
+                        <TextView
+                            android:id="@+id/task_timestamp_text_view22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/task_description_text_view23"
+                            android:layout_marginVertical="4dp"
+                            android:ellipsize="end"
+                            android:gravity="right"
+                            android:maxLines="2"
+                            android:text="20/05/2024"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/time22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="4dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        android:text="12:00"
+                        android:layout_alignParentEnd="true"
+                        android:textSize="22sp"
+                        android:textColor="@color/primary"
+                        />
+
+                    <CheckBox
+                        android:id="@+id/done_checkbox22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:buttonTint="@color/primary"
+                        android:backgroundTintMode="add"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_add_24"
+                android:backgroundTint="@color/primary"
+                android:layout_gravity="end|bottom"
+                android:padding="20dp"
+                android:id="@+id/add_task_btn"
+                android:background="@drawable/circle_shape"
+                android:backgroundTintMode="add"
+                android:elevation="200dp"
+                />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
