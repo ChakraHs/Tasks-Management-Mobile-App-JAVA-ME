@@ -11,121 +11,91 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mytask.R;
 import com.example.mytask.TaskDetailsActivity;
 import com.example.mytask.Utility;
 import com.example.mytask.models.Task;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.LinkedList;
-import java.util.Objects;
+import java.util.List;
 
-public class TaskAdapter extends FirestoreRecyclerAdapter<Task, TaskAdapter.TaskViewHolder> {
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
-    Context context;
-    FirebaseFirestore db;
-    FirebaseUser currentUser;
-
-    private FragmentManager fragmentManager;
-
-    private LinkedList<Task> tasks;
+    private Context context;
+    private FirebaseFirestore db;
+    private FirebaseUser currentUser;
+    private List<Task> taskList;
     private static final String TAG = "TaskAdapter";
-    public TaskAdapter(@NonNull FirestoreRecyclerOptions<Task> options, Context context) {
-        super(options);
-        this.context=context;
+
+    public TaskAdapter(List<Task> taskList, Context context) {
+        this.taskList = taskList;
+        this.context = context;
         this.db = FirebaseFirestore.getInstance();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         this.currentUser = mAuth.getCurrentUser();
-        this.context = context;
-    }
-
-
-    public TaskAdapter(@NonNull FirestoreRecyclerOptions<Task> options,LinkedList<Task> tasks, Context context , FragmentManager fragmentManager ) {
-        super(options);
-        this.db = FirebaseFirestore.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        this.currentUser = mAuth.getCurrentUser();
-        this.tasks = tasks;
-        this.context = context;
-        this.fragmentManager = fragmentManager;
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull TaskViewHolder holder, int position, @NonNull Task task) {
-        Utility.setTextViewMaxCharacters(task.getTitle(), 18);
-        holder.titleTextView.setText(Utility.setTextViewMaxCharacters(task.getTitle(), 18));
-        holder.descriptionTextView.setText(task.getDescription());
-        holder.isDone.setChecked(task.getIsDone());
-
-        // Set the end time of the task if available
-        if (task.getEndTimestamp() != null) {
-            holder.endTimeTextView.setText(Utility.timestampToTime(task.getEndTimestamp()));
-            holder.timestampTextView.setText(Utility.timestampToString(task.getEndTimestamp()));
-        } else {
-            holder.endTimeTextView.setText("18:00"); // Clear text if end time is not available
-            holder.timestampTextView.setText(Utility.timestampToString(task.getTimestamp()));
-        }
-
-        holder.isDone.setOnCheckedChangeListener(null); // To prevent unwanted triggering of listener
-
-        holder.isDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            private static final String TAG = "TASK_ITEM";
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                DocumentReference userTasksRef;
-                String docId = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
-                userTasksRef = Utility.getCollectionReferenceForTask().document(docId);
-                // Traitement à effectuer lorsque la case est cochée ou décochée
-                if (isChecked) {
-                    userTasksRef
-                            .update("isDone",true)
-                            .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully updated!"))
-                            .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
-
-                } else {
-
-                    userTasksRef
-                            .update("isDone",false)
-                            .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully updated!"))
-                            .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
-
-
-                }
-            }
-        });
-
-        holder.itemView.setOnClickListener(v->{
-            Intent intent = new Intent(context, TaskDetailsActivity.class);
-            intent.putExtra("title",task.getTitle());
-            intent.putExtra("description",task.getDescription());
-            String docId = this.getSnapshots().getSnapshot(position).getId();
-            intent.putExtra("docId",docId);
-            context.startActivity(intent);
-        });
     }
 
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_task_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_task_item, parent, false);
         return new TaskViewHolder(view);
     }
 
-    class TaskViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
+        Task task = taskList.get(position);
+        holder.titleTextView.setText(Utility.setTextViewMaxCharacters(task.getTitle(), 18));
+        holder.descriptionTextView.setText(task.getDescription());
+        holder.isDone.setChecked(task.getIsDone());
 
-        TextView titleTextView,descriptionTextView,timestampTextView,endTimeTextView;
+        if (task.getEndTimestamp() != null) {
+            holder.endTimeTextView.setText(Utility.timestampToTime(task.getEndTimestamp()));
+            holder.timestampTextView.setText(Utility.timestampToString(task.getEndTimestamp()));
+        } else {
+            holder.endTimeTextView.setText("18:00");
+            holder.timestampTextView.setText(Utility.timestampToString(task.getTimestamp()));
+        }
+
+        holder.isDone.setOnCheckedChangeListener(null); // Prevent unwanted triggering
+
+        holder.isDone.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            DocumentReference userTasksRef;
+            String docId = task.getId();
+            userTasksRef = Utility.getCollectionReferenceForTask().document(docId);
+            userTasksRef.update("isDone", isChecked)
+                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully updated!"))
+                    .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
+        });
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, TaskDetailsActivity.class);
+            intent.putExtra("title", task.getTitle());
+            intent.putExtra("description", task.getDescription());
+            intent.putExtra("docId", task.getId());
+            context.startActivity(intent);
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return taskList.size();
+    }
+
+    public void updateTasks(List<Task> newTaskList) {
+        this.taskList = newTaskList;
+        notifyDataSetChanged();
+    }
+
+    static class TaskViewHolder extends RecyclerView.ViewHolder {
+        TextView titleTextView, descriptionTextView, timestampTextView, endTimeTextView;
         CheckBox isDone;
+
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.task_title_text_view);
@@ -134,7 +104,5 @@ public class TaskAdapter extends FirestoreRecyclerAdapter<Task, TaskAdapter.Task
             endTimeTextView = itemView.findViewById(R.id.time);
             isDone = itemView.findViewById(R.id.done_checkbox);
         }
-
     }
-
 }

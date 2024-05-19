@@ -12,6 +12,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.mytask.dao.FirebaseHelper;
 import com.example.mytask.fragments.EventsFragment;
+import com.example.mytask.fragments.NotesFragment;
 import com.example.mytask.fragments.ProjectFragment;
 import com.example.mytask.fragments.TasksFragment;
 import com.example.mytask.viewmodel.UserViewModel;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     CircleImageView imageView;
 
 
-    Button myListButton, eventsButton, projectsButton;
+    Button myListButton, eventsButton, projectsButton, notesButton;
 
 
     TextView usernameTextView;
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         myListButton = findViewById(R.id.my_tasks_btn);
         eventsButton = findViewById(R.id.events_btn);
         projectsButton = findViewById(R.id.projects_btn);
+        notesButton = findViewById(R.id.notes_btn);
 
         myListButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +104,38 @@ public class MainActivity extends AppCompatActivity {
                 myListButton.setTextColor(getResources().getColor(R.color.primary));
                 myListButton.setBackgroundColor(Color.parseColor("#D4E7F5"));
                 myListButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#D4E7F5")));
+
+                // Reset style for "Notes" button
+                notesButton.setTextColor(getResources().getColor(R.color.gray));
+                notesButton.setBackgroundColor(getResources().getColor(android.R.color.white));
+
+                // Reset style for "Events" button
+                eventsButton.setTextColor(getResources().getColor(R.color.gray));
+                eventsButton.setBackgroundColor(getResources().getColor(android.R.color.white));
+
+                // Reset style for "Projects" button
+                projectsButton.setTextColor(getResources().getColor(R.color.gray));
+                projectsButton.setBackgroundColor(getResources().getColor(android.R.color.white));
+            }
+        });
+
+        notesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, NotesFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+                // Change style for "Tasks" button
+                notesButton.setTextColor(getResources().getColor(R.color.primary));
+                notesButton.setBackgroundColor(Color.parseColor("#D4E7F5"));
+                notesButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#D4E7F5")));
+
+                // Reset style for "Tasks" button
+                myListButton.setTextColor(getResources().getColor(R.color.gray));
+                myListButton.setBackgroundColor(getResources().getColor(android.R.color.white));
 
                 // Reset style for "Events" button
                 eventsButton.setTextColor(getResources().getColor(R.color.gray));
@@ -127,6 +162,10 @@ public class MainActivity extends AppCompatActivity {
                 eventsButton.setBackgroundColor(Color.parseColor("#D4E7F5"));
                 eventsButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#D4E7F5")));
 
+                // Reset style for "Notes" button
+                notesButton.setTextColor(getResources().getColor(R.color.gray));
+                notesButton.setBackgroundColor(getResources().getColor(android.R.color.white));
+
                 // Reset style for "Tasks" button
                 myListButton.setTextColor(getResources().getColor(R.color.gray));
                 myListButton.setBackgroundColor(getResources().getColor(android.R.color.white));
@@ -150,6 +189,10 @@ public class MainActivity extends AppCompatActivity {
                 projectsButton.setTextColor(getResources().getColor(R.color.primary));
                 projectsButton.setBackgroundColor(Color.parseColor("#D4E7F5"));
                 projectsButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#D4E7F5")));
+
+                // Reset style for "Notes" button
+                notesButton.setTextColor(getResources().getColor(R.color.gray));
+                notesButton.setBackgroundColor(getResources().getColor(android.R.color.white));
 
                 // Reset style for "Tasks" button
                 myListButton.setTextColor(getResources().getColor(R.color.gray));
@@ -175,6 +218,10 @@ public class MainActivity extends AppCompatActivity {
             if (currentFragment instanceof TasksFragment) {
                 // If the current fragment is TasksFragment, navigate to TaskDetailsActivity
                 startActivity(new Intent(MainActivity.this, TaskDetailsActivity.class));
+            }else if (currentFragment instanceof NotesFragment) {
+                // If the current fragment is NoteFragment, navigate to NoteDetailsActivity
+                Log.d("add note clicked","note");
+                startActivity(new Intent(MainActivity.this, NoteDetailsActivity.class));
             }else if (currentFragment instanceof ProjectFragment) {
                 // If the current fragment is TasksFragment, navigate to TaskDetailsActivity
                 startActivity(new Intent(MainActivity.this, ProjectDetailsActivity.class));
