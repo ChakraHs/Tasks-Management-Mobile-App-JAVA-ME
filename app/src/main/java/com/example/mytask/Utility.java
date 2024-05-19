@@ -22,6 +22,11 @@ public class Utility {
         return FirebaseFirestore.getInstance().collection("tasks").document(currentUser.getUid()).collection("my_tasks");
     }
 
+    public static CollectionReference getCollectionReferenceForNote() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("notes").document(currentUser.getUid()).collection("my_notes");
+    }
+
     public static CollectionReference getCollectionReferenceForProject() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         return FirebaseFirestore.getInstance().collection("projects").document(currentUser.getUid()).collection("my_projects");
