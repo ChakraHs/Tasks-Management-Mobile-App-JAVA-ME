@@ -40,11 +40,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_bar_layout"
-        android:layout_marginVertical="20dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/user_info"
         android:background="@drawable/shadow_background"
         android:backgroundTint="#D4E7F5"
         android:padding="10dp"
+        android:layout_marginBottom="5dp"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
