@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mytask.NoteDetailsActivity;
 import com.example.mytask.R;
 import com.example.mytask.TaskDetailsActivity;
 import com.example.mytask.Utility;
@@ -30,7 +31,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
     private List<Note> noteList;
-    private static final String TAG = "TaskAdapter";
+    private static final String TAG = "NoteAdapter";
 
     public NoteAdapter(List<Note> noteList, Context context) {
         this.noteList = noteList;
@@ -54,7 +55,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.timestampTextView.setText(Utility.timestampToString(note.getTimestamp()));
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, TaskDetailsActivity.class);
+            Intent intent = new Intent(context, NoteDetailsActivity.class);
             intent.putExtra("description", note.getDescription());
             intent.putExtra("docId", note.getId());
             context.startActivity(intent);

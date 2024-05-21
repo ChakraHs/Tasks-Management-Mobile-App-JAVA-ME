@@ -31,7 +31,7 @@ import java.util.List;
 
 public class NotesFragment extends Fragment {
 
-    private static final String TAG = "TasksFragment";
+    private static final String TAG = "NotesFragment";
 
     private ProgressBar progressBar;
     private RecyclerView notesRecyclerView;
@@ -121,7 +121,7 @@ public class NotesFragment extends Fragment {
     private void filterTasks(String searchText) {
         LinkedList<Note> filteredNotes = new LinkedList<>();
         for (Note note : noteList) {
-            if (note.getTitle().contains(searchText) || note.getDescription().contains(searchText)) {
+            if (note.getDescription().contains(searchText)) {
                 filteredNotes.add(note);
             }
         }
