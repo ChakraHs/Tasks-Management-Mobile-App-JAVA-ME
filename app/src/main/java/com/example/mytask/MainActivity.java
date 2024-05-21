@@ -22,6 +22,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mytask.dao.FirebaseHelper;
 import com.example.mytask.fragments.EventsFragment;
 import com.example.mytask.fragments.NotesFragment;
@@ -33,6 +39,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -59,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     TextView usernameTextView;
+
+    TextView weather;
+
+    String weatherUrl;
 
 
     @Override
@@ -90,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
         eventsButton = findViewById(R.id.events_btn);
         projectsButton = findViewById(R.id.projects_btn);
         notesButton = findViewById(R.id.notes_btn);
+
+        weather = findViewById(R.id.weather);
+
+        this.obtainLocation();
 
         myListButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,5 +318,63 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout,fragment);
         fragmentTransaction.commit();
 
+    }
+
+
+    private void getWeatherData() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        Log.d("Weather", "entred");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, weatherUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            // Parse JSON response
+                            JSONObject obj = new JSONObject(response);
+                            JSONArray arr = obj.getJSONArray("data");
+                            JSONObject obj2 = arr.getJSONObject(0);
+
+                            // Extract weather data
+                            String temp = obj2.getString("temp") + " °C " ;
+//                            String precipitation = obj2.getString("precip") + " mm";
+//                            String wind = obj2.getString("wind_spd") + " m/s " + obj2.getString("wind_cdir");
+//                            String city = obj2.getString("city_name");
+
+
+                            Log.d("Weather", temp.toString());
+
+                            // Update UI
+                            runOnUiThread(() -> {
+                                weather.setText(temp);
+//                                weather.setText(city);
+//                                weather.setText(precipitation);
+//                                weather.setText(wind);
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        // Add the request to the RequestQueue
+        queue.add(stringRequest);
+    }
+
+
+    private void obtainLocation() {
+        weatherUrl = "http://api.weatherbit.io/v2.0/current?" +
+                "lat=" + "34.011036495662474" +
+                "&lon=" +  "-6.849026873799245" +
+                "&key=" + "089f022ca905454b9c61e4196e8773a6";
+
+        // This function will fetch data from URL
+
+        Log.d("Weather Url", weatherUrl.toString());
+        getWeatherData();
+        // });
     }
 }
